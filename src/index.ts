@@ -6,6 +6,7 @@ import '../style/index.css';
 import {ICommandPalette} from "@jupyterlab/apputils";
 import {IMainMenu} from "@jupyterlab/mainmenu";
 import {DataCollect} from "./datacollect";
+import {Docs} from "./docs";
 import {Menu} from "@phosphor/widgets";
 import {Link} from "./link";
 
@@ -19,7 +20,9 @@ export namespace CommandIDS {
 
     export const bi_core: string = "DataCollect:bi_core";
 
-    export const link: string = "Link"
+    export const link: string = "Link";
+
+    export const docs: string = "Docs"
 }
 
 
@@ -28,6 +31,7 @@ function activateJumpUrl(app: JupyterLab, palette: ICommandPalette, mainMenu: IM
 
     let dataCollect = new DataCollect();
     let linkModel = new Link()
+    let docsModel = new Docs()
     // 添加menu
     const category = "SubServer";
     const {commands} = app;
@@ -55,6 +59,15 @@ function activateJumpUrl(app: JupyterLab, palette: ICommandPalette, mainMenu: IM
             console.log("jump to links index")
             linkModel.jump();
         }
+    });
+
+    commands.addCommand(CommandIDS.docs, {
+        label: "Docs",
+        caption: "open docs index html",
+        execute: () => {
+            console.log("jump to docs index")
+            docsModel.docs();
+        }
     })
 
     let menu = new Menu({commands});
@@ -62,7 +75,8 @@ function activateJumpUrl(app: JupyterLab, palette: ICommandPalette, mainMenu: IM
     [
         CommandIDS.cron_job,
         CommandIDS.bi_core,
-        CommandIDS.link
+        CommandIDS.link,
+        CommandIDS.docs
     ].forEach(command => {
         palette.addItem({command, category});
         menu.addItem({command});
