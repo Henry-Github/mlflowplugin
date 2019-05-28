@@ -75,7 +75,7 @@ function activateJumpUrl(app: JupyterLab, palette: ICommandPalette, mainMenu: IM
         }
     });
 
-    commands.addCommand(CommandIDS.docs, {
+    commands.addCommand(CommandIDS.supervise, {
         label: "Supervise",
         caption: "open supervise index html",
         execute: () => {
