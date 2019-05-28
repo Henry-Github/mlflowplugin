@@ -9,6 +9,7 @@ import {DataCollect} from "./datacollect";
 import {Docs} from "./docs";
 import {Menu} from "@phosphor/widgets";
 import {Link} from "./link";
+import {Supervise} from "./supervise";
 
 
 /**
@@ -22,7 +23,9 @@ export namespace CommandIDS {
 
     export const link: string = "Link";
 
-    export const docs: string = "Docs"
+    export const docs: string = "Docs";
+
+    export const supervise: string = "Supervise"
 }
 
 
@@ -30,8 +33,10 @@ function activateJumpUrl(app: JupyterLab, palette: ICommandPalette, mainMenu: IM
     console.log('JupyterLab extension JumpUrl is activated!');
 
     let dataCollect = new DataCollect();
-    let linkModel = new Link()
-    let docsModel = new Docs()
+    let linkModel = new Link();
+    let docsModel = new Docs();
+    let superviseModel = new Supervise();
+
     // 添加menu
     const category = "SubServer";
     const {commands} = app;
@@ -68,7 +73,17 @@ function activateJumpUrl(app: JupyterLab, palette: ICommandPalette, mainMenu: IM
             console.log("jump to docs index")
             docsModel.docs();
         }
-    })
+    });
+
+    commands.addCommand(CommandIDS.docs, {
+        label: "Supervise",
+        caption: "open supervise index html",
+        execute: () => {
+            console.log("jump to supervise index")
+            superviseModel.supervise();
+        }
+    });
+
 
     let menu = new Menu({commands});
     menu.title.label = category;
@@ -76,7 +91,8 @@ function activateJumpUrl(app: JupyterLab, palette: ICommandPalette, mainMenu: IM
         CommandIDS.cron_job,
         CommandIDS.bi_core,
         CommandIDS.link,
-        CommandIDS.docs
+        CommandIDS.docs,
+        CommandIDS.supervise,
     ].forEach(command => {
         palette.addItem({command, category});
         menu.addItem({command});
